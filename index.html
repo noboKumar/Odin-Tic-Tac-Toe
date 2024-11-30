@@ -17,7 +17,7 @@
                 <p>player1:</p>
                 <p>player2:</p>
             </div>
-            <div class="player-turn">player1 turn</div>
+            <div class="player-turn"></div>
         </div>
         <div class="cell-container">
             <div class="cell" data-cell-index="0">X</div>
@@ -30,10 +30,18 @@
             <div class="cell" data-cell-index="7"></div>
             <div class="cell" data-cell-index="8"></div>
         </div>
-        <div class="round">Round: 1</div>
+        <div class="round"></div>
         <button class="reset-btn">Reset</button>
     </div>
+    <div class="input-overlay">
+        <form>
+            <label for="player1">Player-1(X):</label>
+            <input type="text" name="player1" id="player1" required>
+            <label for="player2">Player-2(O):</label>
+            <input type="text" name="player2" id="player2" required>
+        </form>
+    </div>
     
-    <script src="script.js"></script>    
+    <script src="script.js"></script>
 </body>
 </html>
