@@ -19,82 +19,64 @@ body {
 .game-heading > h1{
     padding: 20px;
 }
-.cell {
-    width: 100px;
+.cell{
     height: 100px;
+    width: 100px;
+    border: 2px solid black;
+    box-shadow: 0 0 0 2px;
+    font-size: 4em;
+    cursor: pointer;
+    line-height: 100px;
+    border-radius: 5px;
+}
+.game-container{
+    text-align: center;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    justify-content: center;
+
+}
+.cell-container{
     font-family: "Permanent Marker", cursive;
-    font-size: 3em;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+}
+.player-point{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    font-weight: bold;
+    gap: 150px;
+}
+.player-turn{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.round{
+    font-size: 20px;
+    padding: 10px;
+}
+.reset-btn{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
+    background-color: rgb(177, 115, 0);
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
 }
-.cell-container {
-    display: grid;
-    grid-template-columns: repeat(3, auto); 
-    grid-template-rows: repeat(3, auto);    
-    position: relative;
-    
+button:hover{
+    background-color: rgb(214, 139, 0);
 }
-/* Adding the grid lines */
-.cell-container::before,
-.cell-container::after {
-    content: '';
-    position: absolute;
-    background-color: #333; 
+  button:active{
+    background-color: rgb(131, 85, 0);
 }
-
-/* Horizontal lines */
-.cell-container::before {
-    top: 100px; 
-    left: 0;
-    width: 100%;
-    height: 8px;
-}
-  
-.cell-container::before,
-.cell-container::after{
-    content: '';
-    position: absolute;
-    background-color: #333;
-}
-.cell-container::before{
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: 8px;
-}
-.cell-container::after {
-    top: 200px;
-    left: 0;
-    width: 100%;
-    height: 8px;
-  }
-  
-  /* Adding vertical lines */
-  .cell-container > .cell:nth-child(3)::after,
-  .cell-container > .cell:nth-child(6)::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 100px;
-    width: 8px;
-    height: 100%;
-    background-color: #333;
-  }
-  
-  .cell-container > .cell:nth-child(3)::before,
-  .cell-container > .cell:nth-child(6)::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 200px;
-    width: 8px;
-    height: 100%;
-    background-color: #333;
-  }
 .player-point{
     display: flex;
     justify-content: space-between;
@@ -114,7 +96,9 @@ body {
     padding: 20px;
     font-weight: bold;
 }
-.reset-btn{
+.reset-btn,
+.submit-btn{
+    margin-top: 20px;
     padding: 10px;
     font-size: 20px;
     font-weight: bolder;
@@ -124,10 +108,16 @@ body {
     border-radius: 10px;
     cursor: pointer;
 }
-.reset-btn:hover{
+.submit-btn{
+    margin: 20px auto;
+    display: block;
+}
+.reset-btn:hover,
+.submit-btn:hover{
     background-color: rgb(214, 139, 0);
 }
-.reset-btn:active{
+.reset-btn:active,
+.submit-btn:active{
     background-color: rgb(131, 85, 0);
 }
 /*input overlay */
@@ -165,4 +155,6 @@ body {
     border: 1px solid rgb(255, 255, 255);
     border-radius: 8px;
     background-color: rgba(250, 235, 215, 0.966);
+    font-size: 1em;
+    font-weight: bold;
   }
