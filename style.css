@@ -1,4 +1,3 @@
-/* Reset styles */
 * {
     margin: 0;
     padding: 0;
@@ -16,9 +15,7 @@ body {
     text-align: center;
     align-items: center;
 }
-.game-heading > h1{
-    padding: 20px;
-}
+
 .cell{
     height: 100px;
     width: 100px;
@@ -53,6 +50,7 @@ body {
     font-weight: bold;
     gap: 150px;
 }
+
 .player-turn{
     font-size: 1.5em;
     font-weight: bold;
@@ -96,6 +94,11 @@ button:hover{
     padding: 20px;
     font-weight: bold;
 }
+.result{
+    font-size: 20px;
+    padding: 20px;
+    font-weight: bold;
+}
 .reset-btn,
 .submit-btn{
     margin-top: 20px;
@@ -133,7 +136,7 @@ button:hover{
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    display: none;
+    /* display: none; */
   }
   form{
     background-color: rgba(61, 47, 32, 0.781);
