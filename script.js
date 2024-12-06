@@ -45,21 +45,21 @@ const GameController = (() => {
     }
 
     const checkWinner = () => {
-        const board = GameBoard.getBoard;
+        const board = GameBoard.getBoard();
         const winningCombos = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
         [0, 4, 8], [2, 4, 6]
         ];
         return winningCombos.some((pattern) => {
-            pattern.every((index) => {
-                board[index] === currentPlayer().mark;
+           return pattern.every((index) => {
+               return  board[index] === currentPlayer().mark;
             })
         })
     }
 
     const tie = () => {
-        GameBoard.getBoard().every(cell => cell);
+        return GameBoard.getBoard().every(cell => cell);
     }
     return{
         start,
@@ -82,6 +82,7 @@ const DisplayController = (() => {
         board.forEach((cell, index) => {
             const cellContainer = document.createElement("div");
             cellContainer.textContent = cell;
+            cellContainer.classList.add("cell");
 
             cellContainer.addEventListener("click", () => handleCellClick(index));
             gameBoardContainer.appendChild(cellContainer);
@@ -101,18 +102,17 @@ const DisplayController = (() => {
             GameController.switchTurn();
         }
     }
-
     return{
         render
     }
 })();
+
 const startBtn = document.querySelector(".start-btn"); //sumbit btn
 const resetBtn = document.querySelector(".reset-btn"); //reset btn
+const player1 = document.querySelector("#player1").value || "player1";
+const player2 = document.querySelector("#player2").value || "player2";
 
 startBtn.addEventListener("click", () => {
-    const player1 = document.querySelector("#player1").value || "player1";
-    const player2 = document.querySelector("#player2") || "player2";
-
     GameController.start(player1, player2);
     DisplayController.render();
     document.querySelector(".result").textContent = "";
