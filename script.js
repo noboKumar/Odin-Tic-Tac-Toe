@@ -99,11 +99,12 @@ const DisplayController = (() => {
 
     const handleCellClick = (index) => {
         if (GameController.isGameOver() || GameBoard.getBoard()[index]){
-            return
+            return;
         };
         const currentPlayer = GameController.currentPlayer();
         GameBoard.updateBoard(index, currentPlayer.mark);
         render();
+        
         if(GameController.checkWinner()){
             resultContainer.textContent = `${currentPlayer.name} Wins!`;
             GameController.setGameOver(true);
@@ -119,8 +120,8 @@ const DisplayController = (() => {
     }
 })();
 
-const startBtn = document.querySelector(".start-btn"); //sumbit btn
-const resetBtn = document.querySelector(".reset-btn"); //reset btn
+const startBtn = document.querySelector(".start-btn");
+const resetBtn = document.querySelector(".reset-btn");
 const player1 = document.querySelector("#player1").value || "player1";
 const player2 = document.querySelector("#player2").value || "player2";
 

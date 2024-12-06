@@ -17,7 +17,10 @@ body {
     text-align: center;
     align-items: center;
 }
-
+.game-heading > h1 {
+    font-size: 4rem;
+    filter: drop-shadow(7px 6px 3px #0000004c);
+}
 .cell{
     height: 100px;
     width: 100px;
@@ -44,6 +47,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     margin-right: 50px;
+    filter: drop-shadow(10px 7px 3px #0000004c);
 }
 .player-turn{
     font-size: 1.5em;
@@ -54,6 +58,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     width: 300px;
+    filter: drop-shadow(10px 7px 3px #0000004c);
 }
 .reset-btn,
 .start-btn{
@@ -66,6 +71,7 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    filter: drop-shadow(10px 7px 3px #0000004c);
 }
 .reset-btn:hover,
 .start-btn:hover{
@@ -89,4 +95,5 @@ input{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    filter: drop-shadow(10px 7px 3px #0000004c);
 }
