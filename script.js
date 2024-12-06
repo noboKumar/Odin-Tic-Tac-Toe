@@ -1,127 +1,125 @@
 const GameBoard = (()=>{
-    let board = Array(9).fill(null);
-    const getBoard = ()=> board;
-    const setmark = (index, mark)=>{
-        if (!board[index]) board[index] = mark;
-    };
-    const reset = ()=> (board = Array(9).fill(null))
+    let board = [
+        "", "", "",
+        "", "", "",
+        "", "", ""
+    ]
+    const getBoard = () => board;
     
+    const updateBoard = (index, mark) => {
+        if(!board[index]){
+            board[index] = mark;
+        }
+    }
+    const resetBoard = () => board.fill("");
+
     return{
         getBoard,
-        setmark,
-        reset
+        updateBoard,
+        resetBoard
     }
 })();
 
-const PlayerName = (name, mark)=>{
-    
+const playerName = (name, mark) => {
+
     return {
         name,
-        mark,
+        mark
     }
 };
 
-const Game = (()=>{
+const GameController = (() => {
     let players = [];
     let currentPlayerIndex = 0;
-    let gameOver = false;
 
-    const start = (player1, player2) =>{
-        players = [PlayerName(player1, "X"),PlayerName(player2, "O")]
+    const start = (player1, player2) => {
+        players = [playerName(player1, "X"), playerName(player2, "O")];
         currentPlayerIndex = 0;
-        GameBoard.reset();
-        gameOver = false;
-    }
-    const playerTurn = (index) => {
-        if (gameOver || GameBoard.getBoard()[index]) return;
-        GameBoard.setmark (index, players[currentPlayerIndex].mark);
+        GameBoard.resetBoard();
+    };
 
-        if (checkWinner()){
-            gameOver = true;
-            displayController.showresult = (`${players[currentPlayerIndex].name} wins!`);
-        } else if (tie()){
-            gameOver = true;
-            displayController.showresult = ("it's a tie");
-        } else{
-            currentPlayerIndex = 1 - currentPlayerIndex;
-        }
+    const currentPlayer = () => players[currentPlayerIndex];
+
+    const switchTurn = () => {
+        currentPlayerIndex = 1 - currentPlayerIndex;
     }
-    const checkWinner = ()=>{
-        const board = GameBoard.getBoard();
+
+    const checkWinner = () => {
+        const board = GameBoard.getBoard;
         const winningCombos = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-            [0, 4, 8], [2, 4, 6],            // Diagonals
-          ];
-          return winningCombos.some(combo => 
-            combo.every(index => board[index] === players[currentPlayerIndex].mark))
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+        ];
+        return winningCombos.some((pattern) => {
+            pattern.every((index) => {
+                board[index] === currentPlayer().mark;
+            })
+        })
     }
-    const tie = () => GameBoard.getBoard().every((cell)=> cell !== null);
+
+    const tie = () => {
+        GameBoard.getBoard().every(cell => cell);
+    }
     return{
         start,
-        playerTurn
+        currentPlayer,
+        switchTurn,
+        checkWinner,
+        tie
     }
 })();
 
-const displayController = (()=>{
+
+const DisplayController = (() => {
     const gameBoardContainer = document.querySelector(".cell-container");
     const resultContainer = document.querySelector(".result");
-    const resetBtn = document.querySelector(".reset-btn");
-    const submitBtn = document.querySelector(".submit-btn");
-    const overlay = document.querySelector(".input-overlay");
-    let player1Input = document.querySelector("#player1");
-    let player2Input = document.querySelector("#player2");
-    const player1point = document.querySelector(".player-point p:first-child");
-    const player2point = document.querySelector(".player-point p:last-child");
-    const playerTurnDisplay = document.querySelector(".player-turn");
 
-    const render = ()=>{
+    const render = () => {
+        const board = GameBoard.getBoard();
         gameBoardContainer.innerHTML = "";
-        GameBoard.getBoard().forEach((mark, index)=>{
-            const cell = document.createElement("div");
-            cell.classList.add("cell");
-            cell.textContent = mark || "";
-            
-            cell.addEventListener('click', ()=>{
-                Game.playerTurn(index);
-            });
-
-            gameBoardContainer.appendChild(cell);
-        });
-    };
-
-    const showresult = (message)=>{
-        resultContainer.textContent = message;
-    };
-    
-    const showTurn = (PlayerName) =>{
-        playerTurnDisplay.textContent = `${PlayerName}'s Turn`;
-    };
-
-    submitBtn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const player1 = player1Input.value || "player1";
-        const player2 = player2Input.value || "player2";
-
-        player1point.textContent = `${player1} (X)`;
-        player2point.textContent = `${player2} (O)`
         
-        overlay.style.display = "none";
-        Game.start(player1, player2);
+        board.forEach((cell, index) => {
+            const cellContainer = document.createElement("div");
+            cellContainer.textContent = cell;
+
+            cellContainer.addEventListener("click", () => handleCellClick(index));
+            gameBoardContainer.appendChild(cellContainer);
+        });
+    }
+
+    const handleCellClick = (index) => {
+        const currentPlayer = GameController.currentPlayer();
+        GameBoard.updateBoard(index, currentPlayer.mark);
         render();
-        showTurn(player1);
-    });
-    
-    resetBtn.addEventListener("click", ()=>{
-        Game.start(player1Input.value || "player1", player2Input.value || "palyer2");
-        render();
-        showresult("");
-        showTurn(player1Input.value || "player1");
-    })
+
+        if(GameController.checkWinner()){
+            resultContainer.textContent = `${currentPlayer.name} Wins!`;
+        } else if(GameController.tie()){
+            resultContainer.textContent = "it's a tie!";
+        } else{
+            GameController.switchTurn();
+        }
+    }
+
     return{
-        render,
-        showresult,
-        showTurn
-    }   
+        render
+    }
 })();
-displayController.render();
+const startBtn = document.querySelector(".start-btn"); //sumbit btn
+const resetBtn = document.querySelector(".reset-btn"); //reset btn
+
+startBtn.addEventListener("click", () => {
+    const player1 = document.querySelector("#player1").value || "player1";
+    const player2 = document.querySelector("#player2") || "player2";
+
+    GameController.start(player1, player2);
+    DisplayController.render();
+    document.querySelector(".result").textContent = "";
+});
+
+resetBtn.addEventListener("click", () => {
+    GameController.start(player1, player2);
+    DisplayController.render();
+    document.querySelector(".result").textContent = "";
+})

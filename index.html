@@ -11,30 +11,32 @@
 </head>
 <body>
     <div class="game-container">
+        
         <div class="game-heading">
             <h1>Tic Tac Toe</h1>
-            <div class="player-point">
-                <p></p>
-                <p></p>
-            </div>
             <div class="player-turn"></div>
         </div>
-        <div class="cell-container"></div>
         
-        <div class="round"></div>
+        <input id="player1" type="text" placeholder="Player 1 Name">
+        <input id="player2" type="text" placeholder="Player 2 Name">
+        
+        <div class="cell-container">
+            <!-- <div class="cell">X</div>
+            <div class="cell"></div>
+            <div class="cell">O</div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell">X</div>
+            <div class="cell"></div>
+            <div class="cell">O</div>
+            <div class="cell"></div> -->
+        </div>
         <div class="result"></div>
+        
+        <button class="start-btn">Start Game</button>
+        
         <button class="reset-btn">Reset</button>
     </div>
-    <div class="input-overlay">
-        <form id="input">
-            <label for="player1">Player-1(X):</label>
-            <input type="text" name="player1" id="player1" >
-            <label for="player2">Player-2(O):</label>
-            <input type="text" name="player2" id="player2" >
-            <button class="submit-btn" type="submit">Submit</button>
-        </form>
-    </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
