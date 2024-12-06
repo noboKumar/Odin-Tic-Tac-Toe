@@ -31,11 +31,13 @@ const playerName = (name, mark) => {
 const GameController = (() => {
     let players = [];
     let currentPlayerIndex = 0;
+    let gameOver = false;
 
     const start = (player1, player2) => {
         players = [playerName(player1, "X"), playerName(player2, "O")];
         currentPlayerIndex = 0;
         GameBoard.resetBoard();
+        gameOver = false;
     };
 
     const currentPlayer = () => players[currentPlayerIndex];
@@ -61,12 +63,18 @@ const GameController = (() => {
     const tie = () => {
         return GameBoard.getBoard().every(cell => cell);
     }
+
+    const isGameOver = () => gameOver;
+    const setGameOver = (value) => gameOver = value;
+    
     return{
         start,
         currentPlayer,
         switchTurn,
         checkWinner,
-        tie
+        tie,
+        isGameOver,
+        setGameOver
     }
 })();
 
@@ -90,14 +98,18 @@ const DisplayController = (() => {
     }
 
     const handleCellClick = (index) => {
+        if (GameController.isGameOver() || GameBoard.getBoard()[index]){
+            return
+        };
         const currentPlayer = GameController.currentPlayer();
         GameBoard.updateBoard(index, currentPlayer.mark);
         render();
-
         if(GameController.checkWinner()){
             resultContainer.textContent = `${currentPlayer.name} Wins!`;
+            GameController.setGameOver(true);
         } else if(GameController.tie()){
             resultContainer.textContent = "it's a tie!";
+            GameController.setGameOver(true);
         } else{
             GameController.switchTurn();
         }

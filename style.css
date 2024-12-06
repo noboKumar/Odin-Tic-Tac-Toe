@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* border: 2px solid red; */
 }
 
 body {
@@ -42,8 +41,9 @@ body {
     display: grid;
     grid-template-columns: repeat(3, auto);
     width: 300px;
-    margin: auto;
+    margin: 0 auto;
     padding: 20px;
+    margin-right: 50px;
 }
 .player-turn{
     font-size: 1.5em;
@@ -52,8 +52,8 @@ body {
 }
 .result{
     font-size: 20px;
-    padding: 20px;
     font-weight: bold;
+    width: 300px;
 }
 .reset-btn,
 .start-btn{
@@ -85,4 +85,8 @@ input{
     font-weight: bold;
     margin: 10px 0 10px;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
